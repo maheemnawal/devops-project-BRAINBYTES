@@ -1,15 +1,20 @@
-# BRAINBYTES
+cat > README.md <<'EOF'
+# DevOps Pipeline
 
-DevOps Principles and Practices (2+1), semester project.
+A small build tool that converts Markdown source files into HTML pages.
 
-## Team
+## Requirements
 
-| Name | Roll number |
-|---|---|
-| Maheem Nawal | 23-NTU-CS-1171 |
-| Maryam Arif | 23-NTU-CS-1173 |
-| Rida Shahid | 23-NTU-CS-1204 |
+- Node.js
+- npm
 
-## Review turnaround
+## Installation
 
-Every pull request gets a review within one working day.
+Install the package and its production dependencies.
+
+## Usage
+
+Run the build command with a source Markdown file and destination HTML file:
+
+```bash
+devops-build src/notes.md out/notes.html
