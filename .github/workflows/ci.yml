@@ -3,7 +3,21 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: '0 2 * * *' # 02:00 UTC, nightly
 jobs:
+  audit:
+    name: dependency-audit
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=high
   build:
     name: build-and-test
     runs-on: ubuntu-24.04
