@@ -3,7 +3,7 @@ OUT_DIR := out
 SOURCES := $(wildcard $(SRC_DIR)/*.md)
 OUTPUTS := $(patsubst $(SRC_DIR)/%.md,$(OUT_DIR)/%.html,$(SOURCES))
 
-.PHONY: all check build test clean ci help deps package
+.PHONY: all check build test clean ci help deps package lint
 
 all: test ## Build and test everything
 
@@ -39,7 +39,10 @@ test: build ## Run the test suite against what was built
 clean: ## Remove all generated files
 	rm -rf $(OUT_DIR) *.tgz
 
-ci: clean deps check test package ## The build server entry point
+lint: node_modules ## static analysis: seconds, so it runs first
+	npm run --silent lint
+
+ci: clean deps check lint test package ## The build server entry point
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_-]+:.*##' Makefile | awk 'BEGIN {FS = ":.*## "}; {printf "  %-10s %s\n", $$1, $$2}'
