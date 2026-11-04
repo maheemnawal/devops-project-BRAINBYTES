@@ -24,8 +24,3 @@ test('no page is empty', () => {
     assert.ok(size > 0, p + ' is empty');
   }
 });
-
-// Lab 06: intentional failure to prove the merge gate
-test('intentional failure - merge must be blocked', () => {
-  assert.fail('Intentional failure: testing the required CI status check');
-});
