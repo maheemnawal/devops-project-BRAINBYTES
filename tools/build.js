@@ -11,7 +11,8 @@ const md = new MarkdownIt({ html: false, linkify: true, typographer: true });
 function titleFromFilename(file) {
   return path.basename(file, '.md')
     .replace(/-/g, ' ')
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .toUpperCase();
 }
 
 // The part worth testing: Markdown text in, a complete HTML page out.
