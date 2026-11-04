@@ -24,3 +24,14 @@ test('no page is empty', () => {
     assert.ok(size > 0, p + ' is empty');
   }
 });
+
+test('each page title matches its title-cased filename', () => {
+  for (const p of pages) {
+    const html = fs.readFileSync('out/' + p, 'utf8');
+    const expected = p.replace('.html', '')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+
+    assert.ok(html.includes('<title>' + expected + '</title>'));
+  }
+});
