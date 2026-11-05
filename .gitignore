@@ -3,3 +3,7 @@ out/
 *.swp
 node_modules/
 *.tgz
+
+coverage/
+
+coverage/
