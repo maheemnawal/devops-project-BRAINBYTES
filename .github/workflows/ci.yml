@@ -18,8 +18,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm audit --audit-level=high
-  build:
-    name: build-and-test
+  lint:
+    name: lint
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +27,36 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Build, test and package
-        run: make ci
+      - run: make lint
+
+  test:
+    name: test
+    needs: lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: make coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+          if-no-files-found: error
+
+  package:
+    name: package
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: make package
       - uses: actions/upload-artifact@v4
         with:
           name: devops-pipeline
